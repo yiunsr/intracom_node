@@ -1,0 +1,77 @@
+<%-contentFor('title')%>
+main
+<%-contentFor('header')%>
+
+<%-contentFor('content')%>
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>근태관리</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">출퇴근</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+
+</div>
+<div class="col-md-8">
+    <div class="card">
+            <div class="card-header">
+                <strong>출퇴근 </strong>
+            </div>
+            <div class="card-body">
+                <% if (usertype == "admin") { %>
+                    <div class="col-md-8">
+                        <h4>admin 은 출퇴근 체크를 할 수 없습니다. </h4>
+                    </div>
+                <% }else { %>
+                <div class="col-md-3">
+                    <button id="checkin" type="button" class="btn btn-primary" <%= checkIn %> >
+                        <i class="fa fa-clock-o"></i > 출근(Check In)
+                    </button>
+                </div>
+                <div class="col-md-3"></div>
+                    <button id="checkout" type="button" class="btn btn-success"  <%= checkOut %> >
+                        <i class="fa fa-beer"></i > 퇴근(Check Out)
+                    </button>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+</div>
+
+<%-contentFor('script')%>
+<script>
+
+    jQuery(function($) {
+        $( "#checkin" ).click(function() {
+          jQuery.request("POST", "/attendances/checkin", {data : "checkin"}, function(success, httpStatus, data){
+            if(!success)
+              return;
+          });
+          
+        });
+
+        $( "#checkout" ).click(function() {
+          jQuery.request("POST", "/attendances/checkout", {data : "checkout"}, function(success, httpStatus, data){
+            if(!success)
+              return;
+            jQuery.reload();
+          });
+          
+        });
+      });
+
+</script>

@@ -1,0 +1,137 @@
+<%- contentFor('html') %>
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sufee Admin - HTML5 Admin Template</title>
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/static/">
+
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="assets/scss/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="stylesheets/common.css?ver=<%=site.cssver%>">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+    <!--  첫 로딩에 .bg-dark 가 적용이 안되어 전체 화면에 흰색으로 나오는 문제가 있어 강제로 수정함 -->
+    <style>
+        .bg-dark{background-color: #343a40;}
+    </style>
+</head>
+<body class="bg-dark">
+
+
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <H1> Intra Com </H1>
+                </div>
+                <div class="login-form">
+                    <form>
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input type="email" class="form-control" placeholder="Email" name='username'>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Password" name='password'>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                            <label class="pull-right">
+                                <a href="#">Forgotten Password?</a>
+                            </label>
+
+                        </div>
+                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                        <div class="register-link m-t-15 text-center">
+                            <p>Don't have account ? <a href="/users/signup"> Sign Up Here</a></p>
+                        </div>
+                    </form>
+                </div>
+
+                <br/><br/>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <strong>Login Demo</strong>
+                      </div>
+                      <div class="card-body card-block">
+                        <button id="admin_login" data-email="admin@test.com" data-password="adMin__0228"  type="button" class="btn btn-primary btn-lg btn-block">
+                            admin 으로 로그인
+                        </button>
+                        
+
+                        <button id="test0001_login"  data-email="test0001@test.com" data-password="abcd1234" type="button" class="btn btn-outline-primary btn-lg btn-block">
+                            test0001@test.com 사용자로 로그인
+                        </button>
+                        
+
+                        <button id="test0002_login" data-email="test0002@test.com" data-password="abcd1234" type="button" class="btn btn-outline-primary btn-lg btn-block">
+                                test0002@test.com 사용자로 로그인
+                            </button>
+                      </div>
+                     
+                    </div>
+                   
+                  </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="javascripts/common.js?ver=<%=site.jsver%>"></script>
+    <script>
+        jQuery(function($) {
+        $( "form" ).submit(function( event ) {
+          event.preventDefault();
+          
+          var param = $("form [name]").getParam();
+          jQuery.request("POST", "/users/login", param, function(success, httpStatus, data){
+            if(!success){
+                if(httpStatus == 401){
+                    jQuery.confirm("Login Error", "이메일 또는 패스워드가 맞지 않습니다. ")
+                }
+                return;
+            }
+              
+          });
+          
+        });
+
+        $("#admin_login, #test0001_login, #test0002_login").click(function(){
+            var email = $(this).data("email");
+            var password = $(this).data("password");
+            $("form [name=username]").val(email);
+            $("form [name=password]").val(password);
+        });
+
+      });
+    </script>
+
+</body>
+</html>

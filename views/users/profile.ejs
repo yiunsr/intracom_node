@@ -1,0 +1,81 @@
+<%-contentFor('title')%>
+main
+<%-contentFor('header')%>
+
+<%-contentFor('content')%>
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Profile변경</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Profile변경</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+
+</div>
+<div class="col-md-8">
+    <div class="login-form">
+        <form>
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="email" class="form-control" placeholder="Email" disabled value="<%= useremail %>">
+            </div>
+            <div class="form-group">
+                <label>Old Password</label>
+                <input type="password" class="form-control" placeholder="password" name="oldPassword">
+            </div>
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" class="form-control" placeholder="newpassword" name="newPassword">
+            </div>
+            <div class="form-group">
+                    <label>RePassword</label>
+                    <input type="password" class="form-control" placeholder="repassword" name="rePassword">
+                </div>
+            
+            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">정보수정</button>
+            
+        </form>
+    </div>
+</div>
+
+<%-contentFor('script')%>
+<script>
+
+    jQuery(function($) {
+        jQuery( "form" ).submit(function( event ) {
+          event.preventDefault();
+          
+          var param = jQuery("form [name]").getParam();
+          if(param["newPassword"] != param["rePassword"]){
+            jQuery.alert("form error","newpassword 와 repassword 가 다릅니다. ");
+            return;
+          }
+          jQuery.request("POST", "/users/profile", param, function(success, httpStatus, data){
+            if(!success){
+                jQuery.confirm("Error", "기존 password 가 맞지 않습니다.");
+                return;
+            }
+            else{
+                jQuery.move("/");
+            }
+              
+            
+          });
+          
+        });
+      });
+
+</script>
