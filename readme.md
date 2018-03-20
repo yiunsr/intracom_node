@@ -1,7 +1,7 @@
 ## intracom
 
 ### live demo
-* [http://node.labstoo.com](http://node.labstoo.com)
+* <a href="http://node.labstoo.com" target="_blank">http://node.labstoo.com</a>
 
 
 ### doc
